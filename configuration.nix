@@ -17,10 +17,21 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.configurationLimit = 10;
 
   boot.initrd.luks.devices."luks-4060c1c6-89ef-4d17-9ef1-0d86c907a48f".device = "/dev/disk/by-uuid/4060c1c6-89ef-4d17-9ef1-0d86c907a48f";
   networking.hostName = "macbook"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Clear /tmp during boot
+  boot.tmp.cleanOnBoot = true;
+
+  # Housekeeping: Garbage collection
+  nix.gc.automatic = true;
+  nix.optimise.automatic = true;
+
+  # Disable sudo password for the wheel group
+  security.sudo.wheelNeedsPassword = false;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -94,6 +105,9 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  # remove xterm
+  services.xserver.excludePackages = [ pkgs.xterm ];
+  services.xserver.desktopManager.xterm.enable = false;  
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -135,7 +149,6 @@
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
-  #services.xserver.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "elias";
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
@@ -155,13 +168,33 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     fastfetch
-    htop
-    btop
     curl
     keepassxc
     git
-
+    htop
+    nextcloud-client
+    libreoffice-fresh
+    hunspell #dictionary for libreoffice
+    hunspellDicts.en_CA
+    hunspellDicts.en_US  
   ];
+
+  # Fonts
+  fonts.packages = with pkgs; [  
+    corefonts  
+    vistafonts  
+    noto-fonts  
+    noto-fonts-cjk  
+    noto-fonts-emoji  
+    liberation_ttf  
+    fira-code  
+    fira-code-symbols  
+    mplus-outline-fonts.githubRelease  
+    dina-font  
+    proggyfonts  
+  ];
+  
+  fonts.fontDir.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
