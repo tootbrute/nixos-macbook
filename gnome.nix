@@ -1,59 +1,53 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 
-  # GNOME
-  # REF: https://github.com/CallMeCaleb94/KyniFlakes/blob/main/modules/gnome.nix
-  # Remove these things
+  # Auto unlock gnome keyring
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
+  # Remove default packages from GNOME
   environment.gnome.excludePackages = with pkgs.gnome; [
-	baobab		# disk usage analyzer 
-	cheese		# photo booth
-	eog		# image viewer
-	epiphany	# web browser
-	pkgs.gedit		# text editor
-	simple-scan	# document scanner
-	totem		# video player
-	yelp		# help viewer
-	evince		# document viewer
-	geary		# email client
-	seahorse	# password manager
-	gnome-weather
-	gnome-calculator
-	gnome-logs
-	gnome-characters 
-	gnome-contacts
- 	gnome-font-viewer
-	gnome-logs
-	gnome-maps
-	gnome-music
-	gnome-software
-	gnome-clocks
-	gnome-system-monitor
-	gnome-screenshot
-	gnome-terminal
-	gnome-calendar
-	pkgs.gnome-connections
-	pkgs.gnome-text-editor
-	pkgs.gnome-tour
-	pkgs.gnome-photos
+    baobab      # disk usage analyzer
+    cheese      # photo booth
+    eog         # image viewer
+    epiphany    # web browser
+    #gedit       # text editor
+    simple-scan # document scanner
+    totem       # video player
+    yelp        # help viewer
+    evince      # document viewer
+    file-roller # archive manager
+    geary       # email client
+    seahorse    # password manager
+    gnome-contacts
+    gnome-weather
+    gnome-maps
+    gnome-music
+    gnome-software
+    gnome-shell-extensions
+    pkgs.gnome-photos
+    pkgs.gnome-connections
+    pkgs.snapshot
+    gnome-logs
+    gnome-system-monitor
+    gnome-calculator
+    pkgs.gnome-tour
+    #gnome-calendar
+    #gnome-characters
+    #gnome-clocks
+    #gnome-font-viewer gnome-screenshot
+    #gnome-disk-utilitys
   ];
 
-  # Install these GNOME Extensions
-  # NOT WORKING
   environment.systemPackages = with pkgs; [
-	gnomeExtensions.appindicator
-#	gnomeExtensions.blur-my-shell
-#	gnomeExtensions.burn-my-windows
-#	gnomeExtensions.compact-top-bar
-#	gnomeExtensions.custom-accent-colors
-#	gnomeExtensions.gtile
-	gnomeExtensions.dash-to-dock
-#	gnome.gnome-tweaks
-#	gnomeExtensions.arcmenu
-#	gnomeExtensions.gesture-improvements
-#	gnomeExtensions.just-perfection
-#	gnomeExtensions.rounded-window-corners
-#	gnomeExtensions.vitals
+    #Gnome tweak tools
+    gnome.gnome-tweaks
+    gnomeExtensions.appindicator
+    gnomeExtensions.caffeine
+    gnomeExtensions.gsconnect
+    gnomeExtensions.hot-edge
+    gnomeExtensions.alphabetical-app-grid
   ];
 
 }

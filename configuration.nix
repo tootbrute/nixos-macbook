@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./gnome.nix
+      ./flatpak.nix
     ];
 
   # Nix flakes support
@@ -211,9 +212,6 @@
 
   # Tailscale
   services.tailscale.enable = true;
-
-  # Flatpak
-  #services.flatpak.enable = true;
 
   # Open ports in the firewall.
    networking.firewall.allowedTCPPorts = [ 22 ];
