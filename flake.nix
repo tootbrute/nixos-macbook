@@ -1,7 +1,8 @@
 {
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    #nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flatpaks.url = "github:gmodena/nix-flatpak";
   };
   outputs = inputs@{ self, nixpkgs, flatpaks, ... }:
